@@ -1,6 +1,6 @@
 # CKD-prediction
 <p>
-  The patient's <mark title="This indicates potential chronic kidney disease.">serum creatinine</mark> levels were elevated.
+  The training dataset is <mark title="This indicates potential chronic kidney disease.">artificially synthesized</mark>.
 </p>
 <table>
   <thead>
