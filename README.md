@@ -1,5 +1,5 @@
 # CKD-prediction
-<p>
+<p> 
   The training dataset is <mark title="This indicates potential chronic kidney disease.">artificially synthesized</mark>.
 </p>
 <table>
