@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferdux Clinical Intelligence Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Navigation -->
+    <nav id="mainNav" class="main-nav">
+        <div class="nav-brand">
+            <div class="nav-logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="url(#logoGrad)"/>
+                    <path d="M16 8v16M8 16h16" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                    <defs><linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#7C3AED"/><stop offset="1" stop-color="#4F46E5"/></linearGradient></defs>
+                </svg>
+                <span>Ferdux</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" data-view="home">Home</a>
+                <a href="#" class="nav-link" data-view="models">Predictions</a>
+                <a href="#" class="nav-link" data-view="about">About</a>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <button class="nav-btn-icon" id="notificationBtn" title="Notifications">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+            </button>
+            <button class="nav-btn-primary" onclick="switchView('models')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                Start Prediction
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== HOME VIEW ===== -->
+    <div id="home-view" class="view active">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span class="badge-dot"></span>
+                        Clinical Intelligence Platform
+                    </div>
+                    <h1 class="hero-title">AI-Powered Clinical Prediction for <span class="text-gradient">Better Outcomes</span></h1>
+                    <p class="hero-subtitle">Advanced multi-disease prediction system trained on clinical data. Supporting healthcare professionals with fast, accurate insights across 13 critical conditions.</p>
+                    <div class="hero-actions">
+                        <button class="btn-primary" onclick="switchView('models')">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                            Start Prediction
+                        </button>
+                        <button class="btn-ghost" onclick="document.getElementById('how-it-helps').scrollIntoView({behavior:'smooth'})">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                            Learn More
+                        </button>
+                    </div>
+                    <div class="hero-stats-row">
+                        <div class="hero-stat">
+                            <div class="hero-stat-num">13</div>
+                            <div class="hero-stat-label">Disease Models</div>
+                        </div>
+                        <div class="hero-stat-divider"></div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-num">97%+</div>
+                            <div class="hero-stat-label">Avg. Accuracy</div>
+                        </div>
+                        <div class="hero-stat-divider"></div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-num">&lt;3s</div>
+                            <div class="hero-stat-label">Response Time</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image-wrap">
+                    <div class="hero-image-bg"></div>
+                    <img src="{{ url_for('static', filename='img/hero-doctor-1.jpg') }}" alt="Doctor using clinical prediction system" class="hero-image">
+                    <div class="hero-float-card hero-float-card-1">
+                        <div class="float-card-icon" style="background: #EDE9FE;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        </div>
+                        <div class="float-card-text">
+                            <div class="float-card-value">98.7%</div>
+                            <div class="float-card-label">CKD Accuracy</div>
+                        </div>
+                    </div>
+                    <div class="hero-float-card hero-float-card-2">
+                        <div class="float-card-icon" style="background: #D1FAE5;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <div class="float-card-text">
+                            <div class="float-card-value">Real-time</div>
+                            <div class="float-card-label">Analysis</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Helps Section -->
+        <section id="how-it-helps" class="section how-section">
+            <div class="section-header">
+                <div class="section-badge">Platform Benefits</div>
+                <h2 class="section-title">How Ferdux Helps You</h2>
+                <p class="section-subtitle">Designed for both healthcare professionals and patients — bridging the gap between complex clinical data and actionable insights.</p>
+            </div>
+            <div class="help-grid">
+                <div class="help-card">
+                    <div class="help-icon" style="background: #EDE9FE;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3>For Doctors & Clinicians</h3>
+                    <p>Get rapid probability assessments across 13 conditions. Use as a clinical decision support tool to validate your observations, catch early warning signs, and prioritize diagnostic tests efficiently.</p>
+                    <ul class="help-list">
+                        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Multi-parameter risk analysis</li>
+                        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Probability-based decision support</li>
+                        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Export results for patient records</li>
+                    </ul>
+                </div>
+                <div class="help-card">
+                    <div class="help-icon" style="background: #DBEAFE;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </div>
+                    <h3>For Patients</h3>
+                    <p>Understand your health status in clear, simple terms. Get easy-to-read probability scores and plain-language explanations that help you have informed conversations with your doctor.</p>
+                    <ul class="help-list">
+                        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Plain language explanations</li>
+                        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Visual probability indicators</li>
+                        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Shareable reports</li>
+                    </ul>
+                </div>
+                <div class="help-card">
+                    <div class="help-icon" style="background: #D1FAE5;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+                    </div>
+                    <h3>For Healthcare Systems</h3>
+                    <p>Streamline clinical workflows with rapid AI-assisted triage. Reduce diagnostic delays and optimize resource allocation across departments with data-driven insights.</p>
+                    <ul class="help-list">
+                        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Faster patient processing</li>
+                        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Reduced diagnostic delays</li>
+                        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Comprehensive export formats</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Model Accuracy Showcase -->
+        <section class="section accuracy-section">
+            <div class="section-header">
+                <div class="section-badge">Model Performance</div>
+                <h2 class="section-title">Validated Clinical Accuracy</h2>
+                <p class="section-subtitle">Our prediction models are rigorously tested and validated against clinical datasets to ensure reliable results you can trust.</p>
+            </div>
+            <div class="accuracy-grid" id="accuracyGrid">
+                <!-- Model accuracy cards will be populated by JS -->
+            </div>
+        </section>
+
+        <!-- Platform Features -->
+        <section class="section features-section">
+            <div class="features-grid">
+                <div class="features-content">
+                    <div class="section-badge">Features</div>
+                    <h2 class="section-title" style="text-align:left;">Built for Modern Healthcare</h2>
+                    <p class="section-subtitle" style="text-align:left; max-width:none;">Every feature is designed with clinical workflows in mind — from rapid data entry to comprehensive result exports.</p>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                            <div><h4>Lightning Fast Predictions</h4><p>Results in under 3 seconds using optimized inference engines</p></div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                            <div><h4>Enterprise-Grade Security</h4><p>All data processed locally — no patient data leaves your system</p></div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+                            <div><h4>Multiple Export Formats</h4><p>PDF, DOC, PNG, and CSV exports for seamless record keeping</p></div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div>
+                            <div><h4>Dual View Mode</h4><p>Doctor view with clinical details and patient view with plain language</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="features-image">
+                    <img src="{{ url_for('static', filename='img/hero-dashboard.jpg') }}" alt="Medical dashboard on tablet">
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===== MODELS VIEW ===== -->
+    <div id="models-view" class="view">
+        <section class="section models-section">
+            <div class="section-header">
+                <div class="section-badge">Select Model</div>
+                <h2 class="section-title">Choose a Prediction Model</h2>
+                <p class="section-subtitle">Select the clinical prediction model that matches your diagnostic needs. Each model is trained and validated for specific conditions.</p>
+            </div>
+            <div class="models-grid" id="modelsGrid">
+                <!-- Model cards populated by JS -->
+            </div>
+        </section>
+    </div>
+
+    <!-- ===== FORM VIEW ===== -->
+    <div id="form-view" class="view">
+        <div class="form-layout">
+            <!-- Sidebar -->
+            <aside class="form-sidebar">
+                <button class="back-btn" onclick="switchView('models')">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m15 18-6-6 6-6"/></svg>
+                    Back to Models
+                </button>
+                <div class="sidebar-model-info">
+                    <div class="sidebar-model-icon" id="sidebarModelIcon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <h3 id="sidebarModelName">Model Name</h3>
+                    <p id="sidebarModelDesc">Model description goes here</p>
+                    <div class="sidebar-model-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Accuracy</span>
+                            <span class="meta-value" id="sidebarModelAccuracy">--</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Parameters</span>
+                            <span class="meta-value" id="sidebarModelParams">--</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Type</span>
+                            <span class="meta-value" id="sidebarModelType">--</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-help">
+                    <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>Need Help?</h4>
+                    <p>Fill in all required fields marked with <span style="color:#DC2626">*</span>. Select the appropriate values from dropdowns or enter numeric values.</p>
+                </div>
+            </aside>
+
+            <!-- Main Form Area -->
+            <main class="form-main">
+                <div class="form-header-bar">
+                    <h2 id="formTitle">Patient Data Input</h2>
+                    <div class="form-view-toggle">
+                        <span class="toggle-label">Input Mode:</span>
+                        <button class="toggle-btn active" data-mode="form">Form</button>
+                        <button class="toggle-btn" data-mode="batch">Batch CSV</button>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="form-progress">
+                    <div class="form-progress-track">
+                        <div class="form-progress-fill" id="formProgressFill" style="width:0%"></div>
+                    </div>
+                    <span class="form-progress-text" id="formProgressText">0% Complete</span>
+                </div>
+
+                <form id="dataForm" class="prediction-form">
+                    <div class="form-fields-grid" id="dynamicFields">
+                        <!-- Dynamic fields populated by JS -->
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Run Prediction
+                        </button>
+                        <button type="button" class="btn-secondary" onclick="document.getElementById('dataForm').reset(); updateProgress();">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                            Reset Form
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Results Section -->
+                <div id="resultsSection" class="results-container hidden">
+                    <div class="results-header-bar">
+                        <h3>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Prediction Results
+                        </h3>
+                        <div class="results-actions">
+                            <!-- View Toggle -->
+                            <div class="view-toggle-bar">
+                                <button class="view-toggle-btn active" data-view="doctor" onclick="switchResultView('doctor')">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    Doctor View
+                                </button>
+                                <button class="view-toggle-btn" data-view="patient" onclick="switchResultView('patient')">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                                    Patient View
+                                </button>
+                            </div>
+                            <!-- Export -->
+                            <div class="export-dropdown" id="exportDropdown">
+                                <button class="btn-export" onclick="toggleExportMenu()">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    Export
+                                </button>
+                                <div class="export-menu hidden" id="exportMenu">
+                                    <button onclick="exportResults('pdf')">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                        Export as PDF
+                                    </button>
+                                    <button onclick="exportResults('doc')">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                        Export as DOC
+                                    </button>
+                                    <button onclick="exportResults('image')">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                        Export as Image
+                                    </button>
+                                    <button onclick="exportResults('csv')">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                        Export as CSV
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Content -->
+                    <div id="resultsContent"></div>
+
+                    <!-- Chart Section for Multi-model -->
+                    <div class="chart-section" id="chartSection">
+                        <h4>Visual Analysis</h4>
+                        <div class="chart-tabs">
+                            <button class="chart-tab active" data-chart="bar" onclick="switchChart('bar')">Probability Chart</button>
+                            <button class="chart-tab" data-chart="gauge" onclick="switchChart('gauge')">Risk Gauges</button>
+                            <button class="chart-tab" data-chart="radar" onclick="switchChart('radar')">Parameter Radar</button>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="resultsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- ===== ABOUT VIEW ===== -->
+    <div id="about-view" class="view">
+        <section class="section about-section">
+            <div class="about-hero">
+                <img src="{{ url_for('static', filename='img/hero-team.jpg') }}" alt="Medical team" class="about-hero-img">
+                <div class="about-hero-overlay">
+                    <h1>About Ferdux</h1>
+                    <p>Advancing clinical care through intelligent prediction</p>
+                </div>
+            </div>
+            <div class="about-content">
+                <div class="about-block">
+                    <h2>Our Mission</h2>
+                    <p>Ferdux was built to bridge the gap between complex clinical data and actionable healthcare insights. We believe that every healthcare professional deserves access to fast, accurate, and easy-to-understand predictive analytics — and every patient deserves clear communication about their health status.</p>
+                </div>
+                <div class="about-block">
+                    <h2>How It Works</h2>
+                    <div class="about-steps">
+                        <div class="about-step">
+                            <div class="step-num">01</div>
+                            <h4>Select a Model</h4>
+                            <p>Choose from 13 specialized clinical prediction models covering renal, metabolic, and cardiovascular conditions.</p>
+                        </div>
+                        <div class="about-step">
+                            <div class="step-num">02</div>
+                            <h4>Enter Patient Data</h4>
+                            <p>Input clinical parameters through our guided form with real-time validation and helpful tooltips.</p>
+                        </div>
+                        <div class="about-step">
+                            <div class="step-num">03</div>
+                            <h4>Get Insights</h4>
+                            <p>Receive probability-based predictions with visual charts, dual-view results, and exportable reports.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-block">
+                    <h2>Clinical Disclaimer</h2>
+                    <div class="disclaimer-box">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        <p><strong>Ferdux is a clinical decision support tool, not a replacement for professional medical judgment.</strong> The predictions provided are probability-based estimates derived from trained models and should always be interpreted by qualified healthcare professionals in the context of the patient's complete clinical picture. Never disregard professional medical advice or delay seeking it because of information provided by this platform.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="url(#logoGradFooter)"/>
+                    <path d="M16 8v16M8 16h16" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                    <defs><linearGradient id="logoGradFooter" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#7C3AED"/><stop offset="1" stop-color="#4F46E5"/></linearGradient></defs>
+                </svg>
+                <span>Ferdux</span>
+            </div>
+            <p class="footer-copy"> Ferdux Clinical Intelligence. All rights reserved. This platform is intended for clinical decision support only.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
