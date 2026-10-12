@@ -1,4 +1,7 @@
 # CKD-prediction
+<p>
+  The patient's <mark title="This indicates potential chronic kidney disease.">serum creatinine</mark> levels were elevated.
+</p>
 <table>
   <thead>
     <tr>
